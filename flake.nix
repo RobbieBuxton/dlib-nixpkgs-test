@@ -40,6 +40,7 @@
           buildInputs = [
             pkgs.dlib
             # pkgs.openturns
+            # pkgs.python311Packages.face-recognition
           ]
           ++ pkgs.lib.optionals pkgs.config.cudaSupport (with pkgs.cudaPackages; [
             cuda_cudart

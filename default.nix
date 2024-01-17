@@ -28,17 +28,6 @@
     sha256 = "sha256-Z1fScuaIHjj2L1uqLIvsZ7ARKNjM+iaA8SAtWUTPFZk=";
   };
 
-  #remove once fixed https://github.com/davisking/dlib/issues/2833#issuecomment-1885902146
-  patches = [ ] ++ lib.optionals
-    cudaSupport
-    [
-      (fetchpatch
-      {
-        url = "https://github.com/conda-forge/dlib-feedstock/raw/cf9148326a7ad74c1dd519c2d3d5dc2912f9697c/recipe/use_new_cudatoolkit.patch";
-        sha256 = "sha256-10YDsy5v4WTJll3ej4LEZ/ApwL0J7oZuIMhSigIernQ=";
-      })
-    ];
-
   postPatch = ''
     rm -rf dlib/external
   '';
@@ -54,11 +43,9 @@
   nativeBuildInputs = [
     cmake
     pkg-config
-  ] ++ lib.optional cudaSupport (with cudaPackages; [
+  ] ++ lib.optionals cudaSupport (with cudaPackages; [
     cuda_nvcc
   ]);
-
-  REBUILD_HACK = "s";
 
   buildInputs = [
     libpng
@@ -67,7 +54,7 @@
     blas
     lapack
   ]
-  ++ lib.optional guiSupport libX11
+  ++ lib.optionals guiSupport [ libX11 ]
   ++ lib.optionals config.cudaSupport (with cudaPackages; [
     cuda_cudart
     cuda_nvcc.dev

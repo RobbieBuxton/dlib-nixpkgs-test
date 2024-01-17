@@ -1,5 +1,4 @@
 #include <iostream>
-// #include <opencv2/core.hpp>
 #include <dlib/dnn.h>
 #include <dlib/cuda/cuda_dlib.h>
 #include <vector>
@@ -14,6 +13,7 @@ int main()
     for (int i = 0; i < device_count; ++i)
     {
         std::cout << "Device " << i << " name: " << dlib::cuda::get_device_name(i) << std::endl;
+        std::cout << "Device " << i << " name: " << dlib::cuda::get_device() << std::endl;
     }
 #else
     std::cout << "Dlib is not compiled with CUDA support." << std::endl;
